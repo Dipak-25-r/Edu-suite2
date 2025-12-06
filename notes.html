@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="gu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Std 11 Maths (GSEB) - વિશેષ નોંધો (Gujarati)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f172a;--card:#0b1220;--accent:#06b6d4;--glass:rgba(255,255,255,0.03);}
+    *{box-sizing:border-box;font-family:'Baloo 2',system-ui,Arial}
+    body{margin:0;background:linear-gradient(180deg,#071025 0%, #07183a 100%);color:#e6eef6;min-height:100vh}
+    header{padding:20px 18px;display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .title{font-size:18px}
+
+    .container{max-width:1100px;margin:18px auto;padding:18px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .search{flex:1;min-width:180px;padding:10px;border-radius:10px;border:0;background:var(--glass);color:inherit}
+    .btn{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),#7c3aed);cursor:pointer}
+
+    .grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+    .chap-list{background:rgba(255,255,255,0.02);padding:12px;border-radius:12px;max-height:70vh;overflow:auto}
+    .chap{padding:10px;border-radius:8px;margin-bottom:8px;cursor:pointer;transition:transform .18s,background .18s}
+    .chap:hover{transform:translateY(-4px);background:rgba(255,255,255,0.02)}
+    .chap.active{background:linear-gradient(90deg,rgba(6,182,212,0.12),rgba(124,58,237,0.08));box-shadow:0 6px 18px rgba(3,7,18,0.6)}
+
+    .note-area{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;min-height:60vh}
+    .chapter-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    h2{margin:0 0 6px 0;font-size:22px}
+    p.lead{margin:0;color:#cfeff6}
+
+    .formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+    .card{background:var(--card);padding:12px;border-radius:12px;backdrop-filter:blur(6px);box-shadow:0 8px 24px rgba(2,6,23,0.6);transform-origin:center;transition:transform .25s,box-shadow .25s}
+    .card:hover{transform:translateY(-8px) rotate(-.5deg);box-shadow:0 18px 40px rgba(2,6,23,0.8)}
+    .formula-title{font-weight:700;margin-bottom:6px}
+    .formula{font-family:serif;padding:6px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);border-radius:8px}
+
+    /* small animations */
+    .pulse{animation:pulse 2.6s infinite}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    footer{padding:12px;text-align:center;color:#9fbec8;font-size:13px;margin-top:14px}
+
+    /* responsive */
+    @media(max-width:880px){.grid{grid-template-columns:1fr;}.chap-list{max-height:220px}
+    }
+  </style>
+  <!-- MathJax for clean formula rendering -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header>
+    <div class="logo">11</div>
+    <div>
+      <div class="title">Std 11 GSEB ગણિત - સંક્ષિપ્ત નોંધો (Gujarati)</div>
+      <div style="font-size:12px;color:#9fbec8">Chapter-wise formulas and short notes — animated & mobile-friendly</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="controls">
+      <input id="search" class="search" placeholder="અધ્યાય શોધો અથવા ફોર્મ્યુલા નાખો (Search chapters or formulas)" />
+      <button class="btn" id="printBtn">Print / Save as PDF</button>
+      <button class="btn" id="addBtn">અધ્યાય ઉમેરો</button>
+    </div>
+
+    <div class="grid">
+      <aside class="chap-list" id="chapList">
+        <!-- chapters injected here -->
+      </aside>
+
+      <section class="note-area" id="noteArea">
+        <div class="chapter-title">
+          <div>
+            <h2 id="chapTitle">અધ્યાય પસંદ કરો</h2>
+            <p class="lead" id="chapDesc">અહીં દરેક અધ્યાયની સમજ અને મુખ્ય ફોર્મ્યુલા સળગાવવામાં આવશે.</p>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:12px;color:#9fbec8">Quick actions</div>
+            <div style="margin-top:6px">
+              <button class="btn" id="toggleAll">Reveal બધી ફોર્મ્યુલા</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="formula-grid" id="formulaGrid">
+          <!-- formula cards injected here -->
+        </div>
+      </section>
+    </div>
+
+    <footer>Made for Std 11 GSEB students • Swipe, search, add chapters • Edit content directly in the file</footer>
+  </main>
+
+  <script>
+    // Pre-filled sample chapters (Gujarati headings + formulas). You can add more or edit.
+    const chapters = [
+      {
+        id:1,
+        title:'અધ્યાય 1: સેટ અને ફંક્શન્સ (Sets & Functions)',
+        desc:'સેટની વ્યાખ્યા, સેટનું પ્રતિનિધિત્વ અને ફંક્શન્સના પ્રાથમિક ગુણવત્તા. મુખ્ય notation અને ખુદના ઉદાહરણ.',
+        formulas:[
+          {t:'સેટ નોટેશન', f:'A = \{x : x \in S\}  (A = {x | x એ S નો ઘટક})'},
+          {t:'વૈઠકી શ્રેણી (Union/Intersection)', f:'A \cup B,\quad A \cap B,\quad A \setminus B'},
+          {t:'ક્વાડ્રેટિક સૂત્ર', f:'x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} \quad (ax^2+bx+c=0)'}
+        ]
+      },
+      {
+        id:2,
+        title:'અધ્યાય 2: ટ્રિગનોમેટ્રી (Trigonometry)',
+        desc:'ત્રિકોણમિતિ ના મૂળભૂત તત્વો અને અધિક ફોર્મ્યુલા. કોણ ના સરૂત (radian/degree) and identities.',
+        formulas:[
+          {t:'મુખ્ય ઓળખાણ', f:'\sin^2\theta+\cos^2\theta=1'},
+          {t:'યોગ/અંતર સંબંધ', f:'\sin(\alpha\pm\beta)=\sin\alpha\cos\beta\pm\cos\alpha\sin\beta'},
+          {t:'દ્વિગુણ ફોર્મ્યુલા', f:'\sin(2\theta)=2\sin\theta\cos\theta'}
+        ]
+      },
+      {
+        id:3,
+        title:'અધ્યાય 3: રેખીય સમીકરણો અને ગ્રાફ (Linear Equations & Graphs)',
+        desc:'રેખીય સમીકરણો, slope-intercept ફોર્મ અને ગ્રાફ કેવી રીતે દોરશો.',
+        formulas:[
+          {t:'સ્લોપ ઈન્ટરસેપ્ટ સ્થિતિ', f:'y=mx+c'},
+          {t:'બિંદુ-સ્લોપ ફોર્મ', f:'y-y_1=m(x-x_1)'},
+          {t:'દૂરસ્થમાન ફોર્મુલા', f:'\text{Distance between }(x_1,y_1)\text{ and }(x_2,y_2)=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}'}
+        ]
+      }
+    ];
+
+    const chapList = document.getElementById('chapList');
+    const formulaGrid = document.getElementById('formulaGrid');
+    const chapTitle = document.getElementById('chapTitle');
+    const chapDesc = document.getElementById('chapDesc');
+    const search = document.getElementById('search');
+
+    function renderChapters(filter=''){
+      chapList.innerHTML='';
+      chapters.filter(c=> (c.title+c.desc).toLowerCase().includes(filter.toLowerCase())).forEach(c=>{
+        const el = document.createElement('div');
+        el.className='chap reveal';
+        el.innerHTML=`<div style="font-weight:700">${c.title}</div><div style="font-size:12px;color:#9fbec8;margin-top:6px">${c.desc}</div>`;
+        el.onclick = ()=> openChapter(c.id, el);
+        chapList.appendChild(el);
+        setTimeout(()=>el.classList.add('show'),50);
+      })
+    }
+
+    function openChapter(id, elem){
+      document.querySelectorAll('.chap').forEach(x=>x.classList.remove('active'));
+      if(elem) elem.classList.add('active');
+      const c = chapters.find(x=>x.id===id);
+      chapTitle.innerText = c.title;
+      chapDesc.innerText = c.desc;
+      formulaGrid.innerHTML = '';
+      c.formulas.forEach((f, i)=>{
+        const card = document.createElement('div');
+        card.className='card reveal';
+        card.innerHTML = `
+          <div class="formula-title">${f.t}</div>
+          <div class="formula" id="formula-${id}-${i}">\(${f.f}\)</div>
+          <div style="margin-top:8px;text-align:right">
+            <button class="btn" onclick="copyFormula('${escapeHtml(f.f)}', event)">કોપી</button>
+          </div>
+        `;
+        formulaGrid.appendChild(card);
+        setTimeout(()=>card.classList.add('show'),80*i+80);
+      });
+      if(window.MathJax) MathJax.typesetPromise();
+    }
+
+    function escapeHtml(s){return s.replace(/'/g,"\\'")}
+
+    function copyFormula(f, e){
+      navigator.clipboard.writeText(f.replace(/\\\\/g,'\\')).then(()=>{
+        const b = e.currentTarget; b.innerText='Copied'; setTimeout(()=>b.innerText='કોપી',900);
+      })
+    }
+
+    // search
+    search.addEventListener('input', (e)=>renderChapters(e.target.value));
+
+    // print/save PDF
+    document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+
+    // add chapter (quick inline prompt)
+    document.getElementById('addBtn').addEventListener('click', ()=>{
+      const t = prompt('અધ્યાયનું શિર્ષક દાખલ કરો (Gujarati)');
+      if(!t) return alert('શિર્ષક જરૂરી છે');
+      const d = prompt('સંક્ષિપ્ત વર્ણન લખો (Gujarati)') || '';
+      const newChap = {id:Date.now(), title:t, desc:d, formulas:[]};
+      chapters.push(newChap);
+      renderChapters(search.value);
+      openChapter(newChap.id);
+    });
+
+    // toggle reveal all
+    document.getElementById('toggleAll').addEventListener('click', ()=>{
+      document.querySelectorAll('.reveal').forEach((el,i)=>setTimeout(()=>el.classList.toggle('show'),i*40));
+    });
+
+    // initial render
+    renderChapters();
+
+    // accessibility: keyboard nav for chapters
+    document.addEventListener('keydown', (e)=>{
+      const active = document.querySelector('.chap.active');
+      if(!active) return;
+      if(e.key==='ArrowDown' || e.key==='ArrowUp'){
+        const nodes = Array.from(document.querySelectorAll('.chap'));
+        const idx = nodes.indexOf(active);
+        const next = e.key==='ArrowDown'? nodes[idx+1]||nodes[0] : nodes[idx-1]||nodes[nodes.length-1];
+        next.click(); next.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    });
+
+    // small helper: reveal on scroll (for long lists)
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('show'); });
+    }, {threshold:0.08});
+    document.addEventListener('DOMContentLoaded', ()=> document.querySelectorAll('.reveal').forEach(el=>io.observe(el)));
+
+  </script>
+</body>
+</html>
