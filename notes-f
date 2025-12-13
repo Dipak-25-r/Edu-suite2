@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subject Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-[Poppins] p-6">
+
+  <h1 class="text-3xl font-bold text-center mb-8">📘 All Subject Notes</h1>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- PDF Card Template (Duplicate for each PDF) -->
+    <div class="bg-white shadow-md rounded-xl p-5 hover:shadow-lg transition border-l-4 border-blue-500">
+      <h2 class="text-xl font-semibold mb-2">Chapter Title</h2>
+      <p class="text-gray-600 text-sm mb-4">Short description about the chapter and what is included inside.</p>
+
+      <img src="image.webp" alt="Chapter Thumbnail" class="rounded-lg mb-4 border" />
+
+      <a href="1.pdf" target="_blank" class="block w-full text-center bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
+        📖 Read / Download PDF
+      </a>
+
+      <p class="text-xs text-gray-500 mt-2">Owner: D.R. Solanki</p>
+    </div>
+
+    <!-- Duplicate more cards here -->
+
+  </div>
+
+</body>
+</html>
