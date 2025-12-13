@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hjp - Advanced Learning Platform by
-         h.j.parikh highschool zarola</title>
+    <title>hjp - Advanced Learning Platform by h.j.parikh highschool zarola</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ55NMDDFL"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -30,6 +29,8 @@
                         primary: '#0066FF',
                         dark: '#121212',
                         darkSurface: '#1E1E1E',
+                        darkSurfaceDarker: '#181818', 
+                        darkSurfaceLight: '#252525'  
                     }
                 }
             }
@@ -99,7 +100,6 @@
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-dark dark:text-gray-100 transition-colors duration-300 overflow-x-hidden">
 
-    <!-- Navigation -->
     <nav class="fixed top-0 w-full bg-white dark:bg-darkSurface shadow-md z-50 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -108,7 +108,6 @@
                     <span class="font-bold text-xl tracking-tight">H.J.Parikh Highschool</span>
                 </div>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-4">
                     <button onclick="router.navigate('home')" class="hover:text-primary transition">Home</button>
                     <button onclick="router.navigate('conics')" class="hover:text-primary transition">Conics</button>
@@ -120,7 +119,6 @@
                     </button>
                 </div>
 
-                <!-- Mobile Button -->
                 <div class="md:hidden flex items-center">
                     <button id="mobileMenuBtn" class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700">
                         <i class="fas fa-bars"></i>
@@ -129,7 +127,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-darkSurface pb-4 px-4 shadow-lg absolute w-full">
             <a onclick="router.navigate('home')" class="block py-2 hover:text-primary cursor-pointer">Home</a>
             <a onclick="router.navigate('conics')" class="block py-2 hover:text-primary cursor-pointer">Conics Grapher</a>
@@ -142,10 +139,8 @@
         </div>
     </nav>
 
-    <!-- Main Content Area -->
     <main id="app" class="pt-20 pb-10 px-4 max-w-7xl mx-auto min-h-screen">
         
-        <!-- HOME PAGE -->
         <section id="home-page" class="page-section fade-in">
             <div class="text-center py-10">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4 text-primary">Master Mathematics & Science</h1>
@@ -197,12 +192,10 @@
             </div>
         </section>
 
-        <!-- CONICS PAGE -->
         <section id="conics-page" class="page-section hidden slide-up">
             <h2 class="text-3xl font-bold mb-6 border-b pb-2 dark:border-gray-700">Conic Section Grapher</h2>
             
             <div class="flex flex-col lg:flex-row gap-6">
-                <!-- Controls -->
                 <div class="lg:w-1/3 bg-white dark:bg-darkSurface p-6 rounded-[15px] shadow-lg h-fit">
                     <div class="mb-4">
                         <label class="block text-sm font-bold mb-2">Select Shape</label>
@@ -214,10 +207,8 @@
                         </select>
                     </div>
 
-                    <!-- Dynamic Inputs -->
                     <div id="conicInputs" class="space-y-3 mb-6">
-                        <!-- Injected via JS -->
-                    </div>
+                        </div>
 
                     <div class="flex gap-2 mb-4">
                         <button onclick="conics.draw()" class="flex-1 bg-primary text-white py-2 rounded hover:bg-blue-700 transition font-medium">Plot Graph</button>
@@ -231,7 +222,6 @@
                     </div>
                 </div>
 
-                <!-- Canvas Area -->
                 <div class="lg:w-2/3 relative">
                     <div class="bg-white dark:bg-darkSurface p-2 rounded-[15px] shadow-lg overflow-hidden">
                         <canvas id="conicsCanvas" width="800" height="600" class="w-full h-auto rounded bg-white"></canvas>
@@ -243,7 +233,6 @@
             </div>
         </section>
 
-        <!-- NOTES PAGE -->
         <section id="notes-page" class="page-section hidden slide-up">
             <div class="flex justify-between items-center mb-6 border-b pb-2 dark:border-gray-700">
                 <h2 class="text-3xl font-bold">Quick Notes</h2>
@@ -254,70 +243,84 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Note Editor -->
                 <div class="md:col-span-1 bg-white dark:bg-darkSurface p-6 rounded-[15px] shadow-lg h-fit">
                     <input type="text" id="noteTitle" placeholder="Topic / Chapter Name" class="w-full mb-3 p-2 font-bold text-lg border-b bg-transparent focus:outline-none focus:border-primary">
                     <textarea id="noteContent" rows="10" placeholder="Type your notes here..." class="w-full p-2 mb-3 bg-gray-50 dark:bg-dark rounded resize-none focus:outline-none focus:ring-1 focus:ring-primary"></textarea>
                     <button onclick="notesApp.save()" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"><i class="fas fa-save mr-2"></i>Save Note</button>
                 </div>
 
-                <!-- Saved Notes List -->
                 <div class="md:col-span-2">
                     <div id="notesList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Populated by JS -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </section>
 
-        <!-- CALCULATOR PAGE -->
         <section id="calculator-page" class="page-section hidden slide-up">
-            <h2 class="text-3xl font-bold mb-6 text-center">Scientific Calculator</h2>
-            <div class="max-w-md mx-auto bg-white dark:bg-darkSurface p-6 rounded-[20px] shadow-xl border border-gray-200 dark:border-gray-700">
-                <input type="text" id="calcDisplay" readonly class="w-full mb-4 p-4 text-right text-3xl font-mono bg-gray-100 dark:bg-dark rounded-lg tracking-wider focus:outline-none">
-                
-                <div class="grid grid-cols-4 gap-3">
-                    <button onclick="calc.clear()" class="p-4 rounded-lg bg-red-100 text-red-600 font-bold hover:bg-red-200">AC</button>
-                    <button onclick="calc.op('(')" class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 font-bold hover:opacity-80">(</button>
-                    <button onclick="calc.op(')')" class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 font-bold hover:opacity-80">)</button>
-                    <button onclick="calc.op('/')" class="p-4 rounded-lg bg-blue-100 text-blue-600 font-bold hover:bg-blue-200">÷</button>
-                    
-                    <button onclick="calc.op('sin(')" class="p-3 text-sm rounded-lg bg-gray-200 dark:bg-gray-600 hover:opacity-80">sin</button>
-                    <button onclick="calc.op('cos(')" class="p-3 text-sm rounded-lg bg-gray-200 dark:bg-gray-600 hover:opacity-80">cos</button>
-                    <button onclick="calc.op('tan(')" class="p-3 text-sm rounded-lg bg-gray-200 dark:bg-gray-600 hover:opacity-80">tan</button>
-                    <button onclick="calc.op('*')" class="p-4 rounded-lg bg-blue-100 text-blue-600 font-bold hover:bg-blue-200">×</button>
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                Advanced Scientific Calculator
+            </h2>
 
-                    <button onclick="calc.append('7')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">7</button>
-                    <button onclick="calc.append('8')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">8</button>
-                    <button onclick="calc.append('9')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">9</button>
-                    <button onclick="calc.op('-')" class="p-4 rounded-lg bg-blue-100 text-blue-600 font-bold hover:bg-blue-200">−</button>
+            <div class="max-w-xs mx-auto bg-white dark:bg-darkSurface p-4 rounded-xl shadow-xl">
 
-                    <button onclick="calc.append('4')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">4</button>
-                    <button onclick="calc.append('5')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">5</button>
-                    <button onclick="calc.append('6')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">6</button>
-                    <button onclick="calc.op('+')" class="p-4 rounded-lg bg-blue-100 text-blue-600 font-bold hover:bg-blue-200">+</button>
-
-                    <button onclick="calc.append('1')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">1</button>
-                    <button onclick="calc.append('2')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">2</button>
-                    <button onclick="calc.append('3')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">3</button>
-                    <button onclick="calc.op('sqrt(')" class="p-4 rounded-lg bg-gray-200 dark:bg-gray-600 font-bold hover:opacity-80">√</button>
-
-                    <button onclick="calc.append('0')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50 col-span-2">0</button>
-                    <button onclick="calc.append('.')" class="p-4 rounded-lg bg-white dark:bg-dark border dark:border-gray-600 font-bold hover:bg-gray-50">.</button>
-                    <button onclick="calc.solve()" class="p-4 rounded-lg bg-primary text-white font-bold hover:bg-blue-700 shadow-lg">=</button>
+                <div class="flex justify-between mb-3 text-sm font-bold">
+                  <span>Mode:</span>
+                  <button onclick="calc.toggleAngle()" class="text-primary hover:text-blue-500 transition-colors">
+                    <span id="angleMode">DEG</span>
+                  </button>
                 </div>
-            </div>
+
+                <input id="calcDisplay" type="text" readonly value="0"
+                  class="w-full mb-4 p-3 text-right text-3xl font-mono bg-gray-100 dark:bg-dark rounded-lg border-2 border-gray-200 dark:border-darkSurface focus:outline-none"
+                  placeholder="0">
+
+                <div class="grid grid-cols-5 gap-2 text-sm font-semibold">
+
+                  <button onclick="calc.clear()" class="bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg transition-colors">AC</button>
+                  <button onclick="calc.op('(')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">(</button>
+                  <button onclick="calc.op(')')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">)</button>
+                  <button onclick="calc.backspace()" class="bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-lg transition-colors">⌫</button>
+                  <button onclick="calc.op('/')" class="bg-primary hover:bg-blue-600 text-white p-3 rounded-lg transition-colors">÷</button>
+
+                  <button onclick="calc.op('sin(')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">sin</button>
+                  <button onclick="calc.op('cos(')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">cos</button>
+                  <button onclick="calc.op('tan(')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">tan</button>
+                  <button onclick="calc.op('log(')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">log</button>
+                  <button onclick="calc.op('*')" class="bg-primary hover:bg-blue-600 text-white p-3 rounded-lg transition-colors">×</button>
+
+                  <button onclick="calc.op('ln(')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">ln</button>
+                  <button onclick="calc.op('sqrt(')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">√</button>
+                  <button onclick="calc.op('^')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">xʸ</button>
+                  <button onclick="calc.append('7')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">7</button>
+                  <button onclick="calc.append('8')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">8</button>
+                  <button onclick="calc.append('9')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">9</button>
+                  <button onclick="calc.op('-')" class="bg-primary hover:bg-blue-600 text-white p-3 rounded-lg transition-colors">−</button>
+
+                  <button onclick="calc.op('Math.PI')" class="bg-gray-200 dark:bg-darkSurfaceDarker hover:bg-gray-300 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">π</button>
+                  <button onclick="calc.append('4')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">4</button>
+                  <button onclick="calc.append('5')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">5</button>
+                  <button onclick="calc.append('6')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">6</button>
+                  <button onclick="calc.op('+')" class="bg-primary hover:bg-blue-600 text-white p-3 rounded-lg transition-colors row-span-2">+</button>
+
+                  <button onclick="calc.append('1')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">1</button>
+                  <button onclick="calc.append('2')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">2</button>
+                  <button onclick="calc.append('3')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">3</button>
+                  <button onclick="calc.append('0')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors col-span-2">0</button>
+
+                  <button onclick="calc.append('.')" class="bg-gray-100 dark:bg-darkSurfaceLight hover:bg-gray-200 dark:hover:bg-darkSurfaceLight p-3 rounded-lg transition-colors">.</button>
+                  <button onclick="calc.solve()" class="bg-primary hover:bg-blue-600 text-white p-3 rounded-lg transition-colors col-span-2"> = </button>
+                  <div class="hidden sm:block"></div>
+                  <div class="hidden sm:block"></div>
+                </div>
+              </div>
         </section>
 
-        <!-- QUIZ PAGE -->
         <section id="quiz-page" class="page-section hidden slide-up">
             <h2 class="text-3xl font-bold mb-6">Knowledge Check</h2>
             <div id="quizContainer" class="max-w-2xl mx-auto bg-white dark:bg-darkSurface p-8 rounded-[15px] shadow-lg">
-                <!-- Injected via JS -->
-            </div>
+                </div>
         </section>
 
-        <!-- FLASHCARDS PAGE -->
         <section id="flashcards-page" class="page-section hidden slide-up">
             <h2 class="text-3xl font-bold mb-6">Flashcard Studio</h2>
             
@@ -330,11 +333,9 @@
             </div>
 
             <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Cards Injected Here -->
-            </div>
+                </div>
         </section>
 
-        <!-- DIAGRAM PAGE -->
         <section id="diagram-page" class="page-section hidden slide-up">
             <h2 class="text-3xl font-bold mb-4">Diagram Sketchpad</h2>
             <div class="flex gap-4 mb-4">
@@ -348,7 +349,6 @@
             </div>
         </section>
 
-        <!-- TOOLS PAGE -->
         <section id="tools-page" class="page-section hidden slide-up">
             <h2 class="text-3xl font-bold mb-6">Tools</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -364,7 +364,6 @@
             </div>
         </section>
         
-        <!-- ABOUT/CONTACT (Footer Style) -->
         <footer class="mt-20 pt-10 border-t dark:border-gray-800 text-center opacity-60 text-sm">
             <p>&copy; EduSuite. Built for learning.</p>
             <p class="mt-2">The website is by Bhavya and Dipak</p>
@@ -372,7 +371,6 @@
 
     </main>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         // --- GLOBAL APP STATE & UTILS ---
         const app = {
@@ -406,6 +404,7 @@
                 quiz.init();
                 flashcards.init();
                 diagram.init();
+                calc.init(); // Initialize calculator with keyboard listener
             },
             toggleTheme: () => {
                 app.state.darkMode = !app.state.darkMode;
@@ -429,7 +428,7 @@
             }
         };
 
-        // --- CONICS GRAPHER ENGINE ---
+        // --- CONICS GRAPHER ENGINE (Existing Logic Preserved) ---
         const conics = {
             ctx: null,
             canvas: null,
@@ -444,11 +443,9 @@
                 conics.canvas = document.getElementById('conicsCanvas');
                 conics.ctx = conics.canvas.getContext('2d');
                 
-                // Event Listeners for Dynamic Form
                 document.getElementById('conicType').addEventListener('change', conics.renderInputs);
-                conics.renderInputs(); // Initial Load
+                conics.renderInputs();
 
-                // Canvas Interactions (Pan/Zoom)
                 conics.canvas.addEventListener('mousedown', e => {
                     conics.isDragging = true;
                     conics.lastX = e.clientX;
@@ -470,7 +467,6 @@
                     conics.draw();
                 });
 
-                // Resize observer
                 new ResizeObserver(() => {
                     conics.canvas.width = conics.canvas.parentElement.clientWidth;
                     conics.draw();
@@ -532,24 +528,20 @@
 
                 ctx.clearRect(0, 0, w, h);
                 
-                // Grid styling
                 ctx.strokeStyle = app.state.darkMode ? '#333' : '#e5e7eb';
                 ctx.lineWidth = 1;
 
-                // Vertical lines
                 for(let x = cx % scale; x < w; x += scale) {
                     ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
                 }
-                // Horizontal lines
                 for(let y = cy % scale; y < h; y += scale) {
                     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
                 }
 
-                // Axes
                 ctx.strokeStyle = app.state.darkMode ? '#fff' : '#000';
                 ctx.lineWidth = 2;
-                ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke(); // X
-                ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke(); // Y
+                ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke();
                 
                 return { cx, cy };
             },
@@ -565,7 +557,6 @@
                 ctx.lineWidth = 3;
                 ctx.beginPath();
 
-                // Helper to map graph units to canvas pixels
                 const mapX = (x) => cx + x * scale;
                 const mapY = (y) => cy - y * scale;
 
@@ -581,7 +572,6 @@
                     else if (type === 'ellipse') {
                         const a = parseFloat(document.getElementById('val_a').value) || 1;
                         const b = parseFloat(document.getElementById('val_b').value) || 1;
-                        // ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle)
                         ctx.ellipse(mapX(h), mapY(k), Math.abs(a * scale), Math.abs(b * scale), 0, 0, 2 * Math.PI);
                         display.innerHTML = `(x - ${h})²/${a*a} + (y - ${k})²/${b*b} = 1`;
                     }
@@ -589,13 +579,10 @@
                         const a = parseFloat(document.getElementById('val_a').value) || 1;
                         const orient = document.getElementById('val_orient').value;
                         
-                        // Plotting point by point for accuracy across view
-                        // Range in graph units relative to h
                         const range = (conics.canvas.width / 2) / scale + Math.abs(conics.offsetX/scale); 
                         
                         let started = false;
                         if(orient === 'vertical') {
-                            // (x-h)^2 = 4a(y-k) => y = k + (x-h)^2 / 4a
                             for(let x = h - range; x <= h + range; x += 0.05) {
                                 const y = k + Math.pow(x - h, 2) / (4 * a);
                                 if (!started) { ctx.moveTo(mapX(x), mapY(y)); started = true; }
@@ -603,7 +590,6 @@
                             }
                             display.innerHTML = `(x - ${h})² = ${4*a}(y - ${k})`;
                         } else {
-                            // (y-k)^2 = 4a(x-h) => x = h + (y-k)^2 / 4a
                             for(let y = k - range; y <= k + range; y += 0.05) {
                                 const x = h + Math.pow(y - k, 2) / (4 * a);
                                 if (!started) { ctx.moveTo(mapX(x), mapY(y)); started = true; }
@@ -617,19 +603,15 @@
                         const b = parseFloat(document.getElementById('val_b').value) || 1;
                         const range = (conics.canvas.width / scale);
 
-                        // Horizontal Hyperbola logic: x = h ± a * sqrt(1 + (y-k)^2/b^2)
-                        // Simplified approach: iterate y, solve for x
-                        // Better approach: parametric x = a sec t, y = b tan t... hard with boundaries.
-                        // Brute force y scan for robustness.
-                        
                         // Right branch
                         let started = false;
                         for(let y = k - range; y <= k + range; y += 0.05) {
-                            // (x-h)^2/a^2 - (y-k)^2/b^2 = 1 => x = h + a * sqrt(1 + (y-k)^2/b^2)
                             const term = 1 + Math.pow(y-k, 2)/Math.pow(b, 2);
                             const x = h + a * Math.sqrt(term);
-                            if(!started) { ctx.moveTo(mapX(x), mapY(y)); started=true; }
-                            else ctx.lineTo(mapX(x), mapY(y));
+                            if(term >= 0) {
+                                if(!started) { ctx.moveTo(mapX(x), mapY(y)); started=true; }
+                                else ctx.lineTo(mapX(x), mapY(y));
+                            } else { started = false; ctx.stroke(); ctx.beginPath(); }
                         }
                         
                         // Left branch
@@ -639,8 +621,10 @@
                         for(let y = k - range; y <= k + range; y += 0.05) {
                             const term = 1 + Math.pow(y-k, 2)/Math.pow(b, 2);
                             const x = h - a * Math.sqrt(term);
-                            if(!started) { ctx.moveTo(mapX(x), mapY(y)); started=true; }
-                            else ctx.lineTo(mapX(x), mapY(y));
+                            if(term >= 0) {
+                                if(!started) { ctx.moveTo(mapX(x), mapY(y)); started=true; }
+                                else ctx.lineTo(mapX(x), mapY(y));
+                            } else { started = false; ctx.stroke(); ctx.beginPath(); }
                         }
                         display.innerHTML = `(x - ${h})²/${a*a} - (y - ${k})²/${b*b} = 1`;
                     }
@@ -656,7 +640,7 @@
                 conics.scale = 20;
                 conics.offsetX = 0;
                 conics.offsetY = 0;
-                conics.renderInputs(); // Resets inputs too
+                conics.renderInputs();
             },
 
             download: () => {
@@ -667,7 +651,7 @@
             }
         };
 
-        // --- NOTES APP ---
+        // --- NOTES APP (Existing Logic Preserved) ---
         const notesApp = {
             init: () => {
                 notesApp.renderList();
@@ -679,10 +663,9 @@
                 if(!title) return alert("Please add a title");
                 
                 const note = { id: Date.now(), title, content, date: new Date().toLocaleDateString() };
-                app.state.notes.unshift(note); // Add to top
+                app.state.notes.unshift(note);
                 localStorage.setItem('notes', JSON.stringify(app.state.notes));
                 
-                // Update UI
                 notesApp.renderList();
                 document.getElementById('noteTitle').value = '';
                 document.getElementById('noteContent').value = '';
@@ -725,47 +708,165 @@
             }
         };
 
-        // --- CALCULATOR ---
+        // --- CALCULATOR (UPGRADED, with keyboard/touch support) ---
         const calc = {
-            expr: '',
-            display: null,
-            init: () => { calc.display = document.getElementById('calcDisplay'); },
-            append: (val) => {
-                calc.expr += val;
-                calc.update();
+            expr: '0',
+            mode: 'DEG', // Default DEGREE mode
+
+            init: () => {
+                calc.clear();
+                window.addEventListener('keydown', calc.handleKey);
             },
-            op: (val) => {
-                calc.expr += val;
-                calc.update();
+            
+            toggleAngle() {
+                this.mode = this.mode === 'DEG' ? 'RAD' : 'DEG';
+                document.getElementById('angleMode').innerText = this.mode;
+                this.clear();
             },
-            clear: () => {
-                calc.expr = '';
-                calc.update();
+
+            append(v) {
+                // If display is '0' or 'Error', start new expression
+                if (this.expr === '0' || this.expr === 'Error') {
+                  this.expr = '';
+                }
+                this.expr += v;
+                this.update();
             },
-            update: () => {
-                document.getElementById('calcDisplay').value = calc.expr;
+
+            op(v) {
+                if (this.expr === 'Error') return;
+
+                // FIX: If the expression is '0' and we press a function or PI, clear '0'
+                const isFunctionOrParen = v.match(/(\(|\w+\()|Math\.PI/);
+                if (this.expr === '0' && isFunctionOrParen) {
+                  this.expr = '';
+                }
+                
+                this.expr += v;
+                this.update();
             },
-            solve: () => {
+
+            clear() {
+                this.expr = '0';
+                this.update();
+            },
+
+            backspace() {
+                if (this.expr === 'Error') {
+                    this.expr = '0';
+                } else {
+                    const funcs = ['sin(', 'cos(', 'tan(', 'log(', 'ln(', 'sqrt(', 'Math.PI'];
+                    let removedFunc = false;
+                    for (const func of funcs) {
+                        if (this.expr.endsWith(func)) {
+                            this.expr = this.expr.slice(0, -func.length);
+                            removedFunc = true;
+                            break;
+                        }
+                    }
+
+                    if (!removedFunc) {
+                        this.expr = this.expr.slice(0, -1);
+                    }
+                    
+                    if (this.expr.length === 0) {
+                        this.expr = '0';
+                    }
+                }
+                this.update();
+            },
+
+            update() {
+                document.getElementById('calcDisplay').value = this.expr;
+            },
+
+            degToRad(x) {
+                return Number(x) * Math.PI / 180;
+            },
+
+            sinDeg(angle) { return Math.sin(this.degToRad(angle)); },
+            cosDeg(angle) { return Math.cos(this.degToRad(angle)); },
+            tanDeg(angle) {
+                // Handle edge case for 90/270 degrees
+                const val = Number(angle) % 180;
+                if (Math.abs(val - 90) < 1e-9 || Math.abs(val + 90) < 1e-9 || Math.abs(val) < 1e-9) { 
+                    const tanResult = Math.tan(this.degToRad(angle));
+                    if (!isFinite(tanResult)) throw new Error('Tan(90) error');
+                    return tanResult;
+                }
+                return Math.tan(this.degToRad(angle));
+            },
+            
+            // Handle keyboard input (Touch is handled by inline onclick)
+            handleKey(e) {
+                const key = e.key;
+
+                if (/[0-9\.]/.test(key)) {
+                    calc.append(key);
+                } else if (/[+\-*/]/.test(key)) {
+                    // Map key '/' to '÷' and '*' to '×' (though the display uses symbols, the expression uses keys)
+                    if (key === '/') calc.op('/');
+                    else if (key === '*') calc.op('*');
+                    else calc.op(key);
+                } else if (key === 'Enter' || key === '=') {
+                    e.preventDefault();
+                    calc.solve();
+                } else if (key === 'Backspace') {
+                    calc.backspace();
+                } else if (key === '(' || key === ')') {
+                    calc.op(key);
+                } else if (key.toLowerCase() === 'p') {
+                    calc.op('Math.PI');
+                } else if (key.toLowerCase() === 'c') { // Clear on 'c'
+                    calc.clear();
+                }
+            },
+
+            solve() {
                 try {
-                    // Safe eval alternative usually preferred, but for pure client side calc:
-                    // Supports sqrt, sin, cos via replacement
-                    let clean = calc.expr
-                        .replace(/sin/g, 'Math.sin')
-                        .replace(/cos/g, 'Math.cos')
-                        .replace(/tan/g, 'Math.tan')
-                        .replace(/sqrt/g, 'Math.sqrt');
-                    const res = eval(clean); 
-                    calc.expr = String(res);
-                    calc.update();
-                } catch(e) {
-                    calc.expr = 'Error';
-                    calc.update();
-                    setTimeout(calc.clear, 1000);
+                  let e = this.expr;
+
+                  // 1. Pre-process trigonometric functions based on mode
+                  if (this.mode === 'DEG') {
+                    // Use custom functions for degree mode and pass 'this' for scope access
+                    e = e.replace(/sin\(([^)]+)\)/g, 'calc.sinDeg($1)')
+                         .replace(/cos\(([^)]+)\)/g, 'calc.cosDeg($1)')
+                         .replace(/tan\(([^)]+)\)/g, 'calc.tanDeg($1)');
+                  } else {
+                    // Use standard Math functions for radian mode
+                    e = e.replace(/sin/g, 'Math.sin')
+                         .replace(/cos/g, 'Math.cos')
+                         .replace(/tan/g, 'Math.tan');
+                  }
+
+                  // 2. Pre-process other mathematical functions and operators
+                  e = e.replace(/log\(/g, 'Math.log10(') // Log base 10
+                       .replace(/ln\(/g, 'Math.log(')    // Natural log (ln)
+                       .replace(/sqrt\(/g, 'Math.sqrt(')
+                       .replace(/\^/g, '**');           // Exponentiation
+
+                  // 3. Safe Evaluation using Function constructor
+                  // Pass 'calc' as a parameter to the anonymous function for safe scope access
+                  const result = new Function('calc', `return ${e};`)(this);
+
+                  // 4. Handle potential NaN, Infinity, or non-finite numbers
+                  if (!isFinite(result)) {
+                    throw new Error("Invalid result (Infinity/NaN)");
+                  }
+
+                  // 5. Final Formatting (Rounds to 10 decimal places for precision)
+                  this.expr = (Math.round(result * 10000000000) / 10000000000).toString();
+                  this.update();
+                } catch (err) {
+                  this.expr = 'Error';
+                  this.update();
+                  // Set a short timeout before clearing the error
+                  setTimeout(() => this.clear(), 1000);
                 }
             }
         };
 
-        // --- QUIZ GENERATOR ---
+        // --- QUIZ GENERATOR (Existing Logic Preserved) ---
         const quiz = {
             data: [
                 { q: "What is the equation of a circle with center (0,0) and radius 5?", options: ["x²+y²=25", "x²+y²=5", "x+y=5", "x²-y²=25"], ans: 0 },
@@ -806,7 +907,7 @@
             }
         };
 
-        // --- FLASHCARDS ---
+        // --- FLASHCARDS (Existing Logic Preserved) ---
         const flashcards = {
             init: () => {
                 flashcards.render();
@@ -832,17 +933,14 @@
                 const grid = document.getElementById('cardsGrid');
                 grid.innerHTML = '';
                 app.state.flashcards.forEach(card => {
-                    // 3D Flip Card Structure
                     const div = document.createElement('div');
                     div.className = "group h-48 w-full perspective-1000 cursor-pointer";
                     div.innerHTML = `
                         <div class="relative w-full h-full text-center transition-transform duration-500 transform-style-3d group-hover:rotate-y-180 shadow rounded-[15px]">
-                            <!-- Front -->
                             <div class="absolute w-full h-full bg-white dark:bg-darkSurface backface-hidden rounded-[15px] flex items-center justify-center p-4 border border-gray-100 dark:border-gray-700">
                                 <h3 class="font-bold text-lg">${card.f}</h3>
                                 <span class="absolute top-2 right-2 text-xs text-gray-400">Hover to flip</span>
                             </div>
-                            <!-- Back -->
                             <div class="absolute w-full h-full bg-blue-50 dark:bg-gray-800 backface-hidden rotate-y-180 rounded-[15px] flex flex-col items-center justify-center p-4">
                                 <p class="text-primary font-medium">${card.b}</p>
                                 <button onclick="flashcards.delete(${card.id})" class="mt-4 text-xs text-red-500 underline z-10 hover:text-red-700">Remove</button>
@@ -854,7 +952,7 @@
             }
         };
 
-        // --- DIAGRAM TOOLS ---
+        // --- DIAGRAM TOOLS (Existing Logic Preserved) ---
         const diagram = {
             canvas: null,
             ctx: null,
@@ -864,12 +962,10 @@
                 diagram.ctx = diagram.canvas.getContext('2d');
                 const c = diagram.canvas;
                 
-                // Drawing events
                 c.addEventListener('mousedown', diagram.start);
                 c.addEventListener('mouseup', diagram.stop);
                 c.addEventListener('mousemove', diagram.draw);
                 
-                // Touch support
                 c.addEventListener('touchstart', (e) => {
                     const touch = e.touches[0];
                     const mouseEvent = new MouseEvent("mousedown", {
