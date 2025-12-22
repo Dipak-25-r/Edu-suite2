@@ -33,39 +33,26 @@ tailwind.config = {
 
 <body class="bg-gray-900 text-gray-100 font-sans">
 
-<!-- ================= ADMIN DASHBOARD ================= -->
-<section id="admin" class="hidden p-6">
-<h1 class="text-2xl font-bold mb-4">📊 Live Results</h1>
-<table class="w-full text-sm border border-gray-700">
-<thead class="bg-gray-700">
-<tr>
-<th>Name</th><th>Roll</th><th>Score</th><th>Status</th>
-</tr>
-</thead>
-<tbody id="liveTable"></tbody>
-</table>
-</section>
-
-<!-- ================= TEACHER ================= -->
+<!-- ================= TEACHER CREATE ================= -->
 <section id="teacher" class="min-h-screen flex items-center justify-center">
 <div class="bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-lg fade">
 <h1 class="text-2xl font-bold text-center mb-4">Create Online Quiz</h1>
 
 <input id="quizTitle" placeholder="Quiz Title"
- class="w-full p-2 bg-gray-700 rounded mb-2">
+ class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-2">
 
 <input id="timePerQ" type="number" placeholder="Time per Question (sec)"
- class="w-full p-2 bg-gray-700 rounded mb-2">
+ class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-2">
 
 <textarea id="questionText" placeholder="Question"
- class="w-full p-2 bg-gray-700 rounded mb-2"></textarea>
+ class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-2"></textarea>
 
-<input id="o1" placeholder="Option A" class="w-full p-2 bg-gray-700 rounded mb-1">
-<input id="o2" placeholder="Option B" class="w-full p-2 bg-gray-700 rounded mb-1">
-<input id="o3" placeholder="Option C" class="w-full p-2 bg-gray-700 rounded mb-1">
-<input id="o4" placeholder="Option D" class="w-full p-2 bg-gray-700 rounded mb-2">
+<input id="o1" placeholder="Option A" class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-1">
+<input id="o2" placeholder="Option B" class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-1">
+<input id="o3" placeholder="Option C" class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-1">
+<input id="o4" placeholder="Option D" class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-2">
 
-<select id="ans" class="w-full p-2 bg-gray-700 rounded mb-3">
+<select id="ans" class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-3">
 <option value="0">Correct: A</option>
 <option value="1">Correct: B</option>
 <option value="2">Correct: C</option>
@@ -86,16 +73,16 @@ Publish & Get Link
 </div>
 </section>
 
-<!-- ================= STUDENT ================= -->
+<!-- ================= STUDENT INFO ================= -->
 <section id="studentInfo" class="hidden min-h-screen flex items-center justify-center">
 <div class="bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md fade">
 <h2 class="text-xl font-bold mb-3 text-center">Student Details</h2>
 
 <input id="studentName" placeholder="Student Name"
- class="w-full p-2 bg-gray-700 rounded mb-2">
+ class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-2">
 
 <input id="studentRoll" placeholder="Roll Number"
- class="w-full p-2 bg-gray-700 rounded mb-3">
+ class="w-full p-2 bg-gray-700 border border-gray-600 rounded mb-3">
 
 <button onclick="startQuiz()"
  class="w-full bg-primary text-black py-2 rounded font-bold">
@@ -125,65 +112,34 @@ Start Test
 <!-- ================= RESULT ================= -->
 <section id="result" class="hidden min-h-screen flex items-center justify-center">
 <div class="bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-lg fade text-center">
+
 <h2 class="text-2xl font-bold mb-2">Test Completed 🎉</h2>
 <p id="scoreText" class="text-lg mb-4"></p>
+
+<table class="w-full text-sm border border-gray-700">
+<thead class="bg-gray-700">
+<tr><th>Name</th><th>Roll</th><th>Score</th></tr>
+</thead>
+<tbody id="resultTable"></tbody>
+</table>
+
 <button onclick="location.reload()"
- class="bg-primary text-black px-6 py-2 rounded font-bold">Back</button>
+ class="mt-4 bg-primary text-black px-6 py-2 rounded font-bold">
+Back
+</button>
 </div>
 </section>
 
-<!-- ================= LOGIC + FIREBASE ================= -->
+<!-- ================= LOGIC (Firebase Ready) ================= -->
 <script type="module">
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import {
- getFirestore, collection, addDoc, onSnapshot
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-/* 🔥 PASTE FIREBASE CONFIG HERE */
-const firebaseConfig = {
- apiKey: "YOUR_KEY",
- authDomain: "YOUR_DOMAIN",
- projectId: "YOUR_PROJECT_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+/* 🔥 PASTE YOUR FIREBASE CONFIG HERE LATER */
 
 let quiz={title:'',questions:[],time:10};
-let index=0,score=0,timerInt,cheated=false;
+let index=0,score=0,timerInt;
 let user={};
 
-const params=new URLSearchParams(location.search);
-if(params.get('code')){
- teacher.classList.add('hidden');
- studentInfo.classList.remove('hidden');
-}
-
-if(location.hash==="#admin"){
- admin.classList.remove('hidden');
- teacher.classList.add('hidden');
- studentInfo.classList.add('hidden');
-
- onSnapshot(collection(db,"results"),snap=>{
-  liveTable.innerHTML="";
-  snap.forEach(d=>{
-   const r=d.data();
-   liveTable.innerHTML+=`
-   <tr class="border-b border-gray-700">
-    <td>${r.name}</td>
-    <td>${r.roll}</td>
-    <td>${r.score}</td>
-    <td>${r.status}</td>
-   </tr>`;
-  });
- });
-}
-
 window.addQuestion=()=>{
- if(!questionText.value||!o1.value||!o2.value||!o3.value||!o4.value)
-  return alert("Fill all fields");
-
+ if(!questionText.value)return alert('Add question');
  quiz.title=quizTitle.value||'Quiz';
  quiz.time=+timePerQ.value||10;
  quiz.questions.push({
@@ -195,43 +151,37 @@ window.addQuestion=()=>{
 }
 
 window.publishQuiz=()=>{
- if(!quiz.questions.length) return alert("Add questions");
+ if(!quiz.questions.length)return alert('Add at least one question');
  const code=Math.random().toString(36).substring(2,8);
- localStorage.setItem(code,JSON.stringify(quiz));
- quizLink.innerHTML=`Share:<br><b>${location.origin+location.pathname}?code=${code}</b>`;
+ quizLink.innerHTML=`Share Link:<br><b>${location.origin+location.pathname}?code=${code}</b>`;
 }
 
 window.startQuiz=()=>{
  user={name:studentName.value,roll:studentRoll.value};
- quiz=JSON.parse(localStorage.getItem(params.get('code')));
  studentInfo.classList.add('hidden');
  quizSection.classList.remove('hidden');
  loadQ();
 }
-
-// Anti-cheat
-document.addEventListener("visibilitychange",()=>{
- if(document.hidden){ cheated=true; finish(); }
-});
 
 function loadQ(){
  const q=quiz.questions[index];
  let t=quiz.time;
  timer.innerText=`⏱ ${t}s`;
  qno.innerText=`Q ${index+1}/${quiz.questions.length}`;
- bar.style.width=((index+1)/quiz.questions.length)*100+'%';
+ bar.style.width=(index/quiz.questions.length)*100+'%';
  question.innerText=q.q;
  options.innerHTML='';
+
  clearInterval(timerInt);
  timerInt=setInterval(()=>{
-  t--; timer.innerText=`⏱ ${t}s`;
-  if(t<=0){clearInterval(timerInt); submit(-1)}
+  t--;timer.innerText=`⏱ ${t}s`;
+  if(t<=0){clearInterval(timerInt);submit(-1)}
  },1000);
 
- q.o.forEach((op,i)=>{
-  let b=document.createElement('button');
-  b.className="w-full p-3 bg-gray-700 hover:bg-primary hover:text-black rounded";
-  b.innerText=op;
+ q.o.forEach((opt,i)=>{
+  const b=document.createElement('button');
+  b.className='w-full p-3 bg-gray-700 hover:bg-primary hover:text-black rounded';
+  b.innerText=opt;
   b.onclick=()=>submit(i);
   options.appendChild(b);
  });
@@ -239,25 +189,18 @@ function loadQ(){
 
 function submit(a){
  clearInterval(timerInt);
- if(a===quiz.questions[index].a) score++;
+ if(a===quiz.questions[index].a)score++;
  index++;
  index<quiz.questions.length?loadQ():finish();
 }
 
-async function finish(){
+function finish(){
  quizSection.classList.add('hidden');
  result.classList.remove('hidden');
  scoreText.innerText=
  `${user.name} (${user.roll}) scored ${score}/${quiz.questions.length}`;
-
- await addDoc(collection(db,"results"),{
-  ...user,
-  score,
-  status: cheated?"CHEATED":"OK",
-  time:Date.now()
- });
 }
 </script>
 
 </body>
-</html>
+</html> 
