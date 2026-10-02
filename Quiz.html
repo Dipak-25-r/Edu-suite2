@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Advanced Math Quiz Engine</title>
+<title>Advanced Classroom Test & Leaderboard Engine</title>
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -32,17 +32,17 @@ tailwind.config={
 <section id="admin" class="hidden p-8 max-w-5xl mx-auto w-full">
 <div class="flex justify-between items-center mb-6">
   <h2 class="text-3xl font-extrabold text-primary">📊 Live Test Analytics</h2>
-  <button onclick="exportCSV()" class="bg-accent px-4 py-2 rounded font-bold text-white hover:opacity-90">Export CSV</button>
+  <button onclick="exportCSV()" class="bg-accent px-4 py-2 rounded-xl font-bold text-white hover:opacity-90 shadow">Export CSV</button>
 </div>
-<div class="overflow-x-auto bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+<div class="overflow-x-auto bg-gray-800 rounded-2xl shadow-xl border border-gray-700">
 <table class="w-full text-left border-collapse">
 <thead class="bg-gray-700 text-gray-300 uppercase text-xs tracking-wider">
 <tr>
-  <th class="p-3">Student Name</th>
-  <th class="p-3">Roll No</th>
-  <th class="p-3">Score</th>
-  <th class="p-3">Percentage</th>
-  <th class="p-3">Status</th>
+  <th class="p-4">Student Name</th>
+  <th class="p-4">Roll No</th>
+  <th class="p-4">Score</th>
+  <th class="p-4">Percentage</th>
+  <th class="p-4">Status</th>
 </tr>
 </thead>
 <tbody id="liveTable" class="divide-y divide-gray-700 text-sm"></tbody>
@@ -56,7 +56,7 @@ tailwind.config={
 <h1 class="text-3xl font-black mb-6 text-center text-primary">Advanced Quiz Builder</h1>
 
 <div class="grid grid-cols-2 gap-3 mb-4">
-  <input id="quizTitle" placeholder="Quiz Title (e.g. Integrals Test)" class="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-primary outline-none">
+  <input id="quizTitle" placeholder="Quiz Title (e.g. Calculus Test)" class="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-primary outline-none">
   <input id="timePerQ" type="number" placeholder="Secs per Question" class="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-primary outline-none">
 </div>
 
@@ -71,12 +71,12 @@ tailwind.config={
 
 <div class="flex gap-3 mb-4">
   <select id="ans" class="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-primary outline-none">
-    <option value="0">Correct Answer: Option A</option>
-    <option value="1">Correct Answer: Option B</option>
-    <option value="2">Correct Answer: Option C</option>
-    <option value="3">Correct Answer: Option D</option>
+    <option value="0">Correct: Option A</option>
+    <option value="1">Correct: Option B</option>
+    <option value="2">Correct: Option C</option>
+    <option value="3">Correct: Option D</option>
   </select>
-  <button onclick="addQuestion()" class="bg-gray-700 px-6 py-3 font-bold rounded-lg hover:bg-gray-600 transition whitespace-nowrap">+ Add Question</button>
+  <button onclick="addQuestion()" class="bg-gray-700 px-6 py-3 font-bold rounded-lg hover:bg-gray-600 transition whitespace-nowrap">+ Add</button>
 </div>
 
 <div id="questionCounter" class="text-xs text-gray-400 mb-4 text-center">Questions added: 0</div>
@@ -85,7 +85,7 @@ tailwind.config={
 🚀 Publish & Generate Link
 </button>
 
-<div id="quizLink" class="text-center text-sm mt-4 text-primary font-mono bg-gray-900 p-3 rounded-lg hidden"></div>
+<div id="quizLink" class="text-center text-sm mt-4 text-primary font-mono bg-gray-900 p-3 rounded-lg hidden border border-gray-700"></div>
 </div>
 </section>
 
@@ -93,9 +93,9 @@ tailwind.config={
 <section id="studentInfo" class="hidden min-h-screen flex items-center justify-center p-4">
 <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md fade border border-gray-700">
 <h2 class="text-2xl font-black mb-2 text-center text-primary">Ready to Test?</h2>
-<p class="text-gray-400 text-sm text-center mb-6">Enter your credentials to begin the exam session.</p>
+<p class="text-gray-400 text-sm text-center mb-6">Enter your details to begin your exam session.</p>
 <input id="studentName" placeholder="Full Name" class="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mb-3 focus:border-primary outline-none">
-<input id="studentRoll" placeholder="Roll Number / Student ID" class="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mb-5 focus:border-primary outline-none">
+<input id="studentRoll" placeholder="Roll Number / ID" class="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg mb-5 focus:border-primary outline-none">
 
 <button onclick="startQuizSession()" class="w-full bg-primary text-black py-3 font-extrabold rounded-xl hover:opacity-95 transition shadow-lg">
 Start Test Now 🎯
@@ -128,14 +128,38 @@ Start Test Now 🎯
 <div class="text-5xl mb-3">🏆</div>
 <h2 class="text-3xl font-black text-primary mb-2">Test Completed!</h2>
 <p id="scoreText" class="text-lg text-gray-300 mb-6"></p>
-<button onclick="location.reload()" class="bg-primary text-black font-extrabold px-6 py-3 rounded-xl w-full shadow-lg">Back to Home</button>
+<div id="resultButtons" class="space-y-3"></div>
+</div>
+</section>
+
+<!-- ================= LEADERBOARD SECTION ================= -->
+<section id="leaderboardSection" class="hidden min-h-screen p-6 max-w-2xl mx-auto w-full flex items-center justify-center">
+<div class="bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700 w-full fade">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-3xl font-black text-primary">🏆 Class Leaderboard</h2>
+    <button onclick="backToHome()" class="bg-gray-700 text-sm px-4 py-2 rounded-xl font-bold hover:bg-gray-600 transition">Home</button>
+  </div>
+  
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-gray-700 text-gray-400 text-xs uppercase tracking-wider">
+          <th class="p-3">Rank</th>
+          <th class="p-3">Student Name</th>
+          <th class="p-3">Roll No</th>
+          <th class="p-3 text-right">Score</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboardList" class="divide-y divide-gray-700/50 text-sm"></tbody>
+    </table>
+  </div>
 </div>
 </section>
 
 <!-- ================= APP LOGIC & FIREBASE ================= -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDrK20CbFxWH2V6iS8EPfXSAjD2RDvxKQo",
@@ -157,7 +181,7 @@ let user = {};
 const params = new URLSearchParams(location.search);
 const quizCode = params.get("code");
 
-// Audio feedback using Web Audio API
+// Web Audio Feedback
 const playSound = (type) => {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -166,10 +190,10 @@ const playSound = (type) => {
     osc.connect(gain);
     gain.connect(ctx.destination);
     if(type === 'correct') {
-      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
     } else {
-      osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.15);
     }
     gain.gain.setValueAtTime(0.1, ctx.currentTime);
@@ -192,11 +216,11 @@ if(location.hash === "#admin"){
       const pct = Math.round((r.score / r.total) * 100);
       liveTable.innerHTML += `
       <tr class="hover:bg-gray-700/50 transition">
-        <td class="p-3 font-semibold">${r.name}</td>
-        <td class="p-3 text-gray-400">${r.roll}</td>
-        <td class="p-3 font-bold text-primary">${r.score}/${r.total}</td>
-        <td class="p-3">${pct}%</td>
-        <td class="p-3"><span class="px-2 py-1 rounded text-xs font-bold ${r.status === 'OK' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">${r.status}</span></td>
+        <td class="p-4 font-semibold">${r.name}</td>
+        <td class="p-4 text-gray-400">${r.roll}</td>
+        <td class="p-4 font-bold text-primary">${r.score}/${r.total}</td>
+        <td class="p-4">${pct}%</td>
+        <td class="p-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${r.status === 'OK' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">${r.status}</span></td>
       </tr>`;
     });
   });
@@ -209,7 +233,7 @@ if(quizCode){
 
 window.addQuestion = () => {
   if(!questionText.value || !o0.value || !o1.value || !o2.value || !o3.value)
-    return alert("Please fill in all question and option fields.");
+    return alert("Please fill out all question and option fields.");
 
   quiz.title = quizTitle.value || "Math Assessment";
   quiz.time = +timePerQ.value || 15;
@@ -244,7 +268,7 @@ window.startQuizSession = async () => {
   loadQ();
 };
 
-// Advanced Anti-Cheat
+// Anti-Cheat
 document.addEventListener("visibilitychange", () => {
   if(document.hidden && !quizSection.classList.contains("hidden")){
     cheated = true;
@@ -307,7 +331,61 @@ async function finishQuiz(){
     status: cheated ? "CHEATED" : "OK",
     timestamp: Date.now()
   });
+
+  const btnContainer = document.getElementById('resultButtons');
+  btnContainer.innerHTML = `
+    <button onclick="showLeaderboard('${quizCode}')" class="bg-accent text-white font-extrabold px-6 py-3 rounded-xl w-full shadow-lg hover:opacity-90 transition">📊 View Class Leaderboard</button>
+    <button onclick="location.reload()" class="bg-gray-700 text-gray-200 font-bold px-6 py-3 rounded-xl w-full hover:bg-gray-600 transition">Back to Home</button>
+  `;
 }
+
+window.showLeaderboard = async (code) => {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('leaderboardSection').classList.remove('hidden');
+
+  const lbList = document.getElementById('leaderboardList');
+  lbList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">Loading rankings...</td></tr>`;
+
+  try {
+    const resultsRef = collection(db, "results");
+    const q = query(resultsRef, orderBy("score", "desc"), limit(10));
+
+    onSnapshot(q, (snapshot) => {
+      lbList.innerHTML = "";
+      let rank = 1;
+      
+      if(snapshot.empty) {
+        lbList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">No scores recorded yet.</td></tr>`;
+        return;
+      }
+
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        let badgeColor = "text-gray-300";
+        if(rank === 1) badgeColor = "text-yellow-400 font-extrabold";
+        else if(rank === 2) badgeColor = "text-gray-300 font-bold";
+        else if(rank === 3) badgeColor = "text-amber-600 font-bold";
+
+        lbList.innerHTML += `
+          <tr class="hover:bg-gray-700/30 transition">
+            <td class="p-3 ${badgeColor}">#${rank}</td>
+            <td class="p-3 font-semibold text-white">${data.name}</td>
+            <td class="p-3 text-gray-400">${data.roll}</td>
+            <td class="p-3 text-right font-bold text-primary">${data.score}/${data.total}</td>
+          </tr>
+        `;
+        rank++;
+      });
+    });
+  } catch (error) {
+    lbList.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-400">Failed to load leaderboard.</td></tr>`;
+  }
+};
+
+window.backToHome = () => {
+  document.getElementById('leaderboardSection').classList.add('hidden');
+  location.reload();
+};
 
 window.exportCSV = () => {
   let csv = "Name,Roll,Score,Total,Status\n";
